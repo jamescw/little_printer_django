@@ -59,7 +59,8 @@ class EditionView(FormView):
     def render_to_response(self, context, **response_kwargs):
         form = self.get_form(self.form_class)
         response = super(EditionView, self).render_to_response(
-            form.get_render_context(), **response_kwargs
+            form.get_render_context(),
+            **response_kwargs
         )
         response['ETag'] = form.etag()
         return response
@@ -78,8 +79,7 @@ class ValidateConfigView(JSONResponseMixin, FormView):
         return {
             'data': json.loads(
                 self.request.POST.get('config')
-            )
-        }
+            )}
 
     def form_valid(self, form):
         return self.render_to_json_response(
@@ -87,9 +87,7 @@ class ValidateConfigView(JSONResponseMixin, FormView):
         )
 
     def form_invalid(self, form):
-        return self.render_to_json_response(
-            {
-                'valid': False,
-                'errors': form.errors
-            }
-        )
+        return self.render_to_json_response({
+            'valid': False,
+            'errors': [error[0] for error in form.errors.values()]
+        })

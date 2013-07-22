@@ -25,7 +25,7 @@ urlpatterns = patterns('',
     url(
         r'^sample/$',
         TemplateView.as_view(
-            template_name = '/sample.html',
+            template_name = 'publication/sample.html',
         )
     ),
     url(

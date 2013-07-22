@@ -81,6 +81,7 @@ class HelloWorldPublicationForm(BergCloudPublicationForm):
         """
         Returns a dictionary of context to be used during template rendering
         """
+        name = self.cleaned_data.get('name')
         lang = self.cleaned_data.get('lang', 'english')
         date = self.cleaned_data.get('local_delivery_time')
 
@@ -92,5 +93,5 @@ class HelloWorldPublicationForm(BergCloudPublicationForm):
             i = 2
 
         return {
-            'greeting': self.greetings[lang][i]
+            'greeting': self.greetings[lang][i] + " {}".format(name)
         }
