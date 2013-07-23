@@ -2,10 +2,10 @@ from django.conf.urls import patterns, url
 from django.templatetags.static import static
 from django.views.generic import TemplateView, RedirectView
 
+from printer.views import ValidateConfigView, MetaView
 
-from printer.views import EditionView, ValidateConfigView, MetaView
 from .forms import HelloWorldPublicationForm
-
+from .views import HelloWorldView
 
 
 urlpatterns = patterns('',
@@ -30,10 +30,7 @@ urlpatterns = patterns('',
     ),
     url(
         r'^edition/$',
-        EditionView.as_view(
-            form_class = HelloWorldPublicationForm,
-            template_name = 'publication/hello_world.html',
-        )
+        HelloWorldView.as_view()
     ),
     url(
         r'^validate_config/$',

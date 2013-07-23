@@ -1,3 +1,8 @@
+"""
+A set of Django compatible form fields to be used on
+BergCloudPublicationForms, each field knows how to
+serialise itself to the BERG Cloud config format.
+"""
 from dateutil import parser
 from django import forms
 

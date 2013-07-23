@@ -53,6 +53,7 @@ class TestPublicationViews(TestCase):
         """
         Test editions respect incoming params from Bergcloud
         """
+        self.data['local_delivery_time'] = '2013-07-16T19:20:30.45+01:00'
         response = self.client.get('/edition/', data=self.data)
         self.assertTemplateUsed(
             response,

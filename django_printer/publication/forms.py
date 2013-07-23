@@ -1,4 +1,3 @@
-import hashlib
 from django import forms
 
 from printer.fields import (
@@ -40,6 +39,7 @@ class HelloWorldPublicationForm(BergCloudPublicationForm):
     )
     lang = BergCloudSelectField(
         label='Select your greeting language',
+        initial='english',
         choices=[
             ('english', 'English'),
             ('french', 'French'),
@@ -54,17 +54,6 @@ class HelloWorldPublicationForm(BergCloudPublicationForm):
         }
     )
 
-    def etag(self):
-        """
-        Generates an etag for this publication
-        """
-        name = self.cleaned_data.get('name')
-        lang = self.cleaned_data.get('lang', 'english')
-        date = self.cleaned_data.get('local_delivery_time')
-        return hashlib.sha224(
-            lang+name+date.strftime('%d%m%Y')
-        ).hexdigest()
-
     def clean_lang(self):
         """
         Ensures the language choice is known to the form
@@ -76,22 +65,3 @@ class HelloWorldPublicationForm(BergCloudPublicationForm):
                 " Please select another".format(lang)
             )
         return lang
-
-    def get_render_context(self):
-        """
-        Returns a dictionary of context to be used during template rendering
-        """
-        name = self.cleaned_data.get('name')
-        lang = self.cleaned_data.get('lang', 'english')
-        date = self.cleaned_data.get('local_delivery_time')
-
-        # Pick a time of day appropriate greeting
-        i = 0
-        if date.hour >= 12 and date.hour <=17:
-            i = 1
-        if (date.hour > 17 and date.hour <=24) or (date.hour >= 0 and date.hour <= 3):
-            i = 2
-
-        return {
-            'greeting': self.greetings[lang][i] + " {}".format(name)
-        }
