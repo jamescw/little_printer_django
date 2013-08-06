@@ -5,7 +5,8 @@ Publications should subclass EditionView.
 import json
 
 from django.http import HttpResponse
-from django.views.generic import FormView
+from django.views.generic.edit import FormMixin
+from django.views.generic import FormView, TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.template.response import TemplateResponse
 from django.core.exceptions import ImproperlyConfigured
@@ -75,7 +76,7 @@ class MetaView(JSONResponseMixin, FormView):
         return self.render_to_json_response(meta)
 
 
-class EditionView(FormView):
+class EditionView(FormMixin, TemplateView):
     """
     Parse the incoming request from BERG Cloud
     and respond with edition content
@@ -87,7 +88,12 @@ class EditionView(FormView):
         """
         Forces form validation
         """
-        self.post(request, *args, **kwargs)
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
     def get_form_kwargs(self):
         """
@@ -101,7 +107,7 @@ class EditionView(FormView):
         If the form is valid render publication
         """
         context = self.get_context_data(form=form)
-        return self.render_to_response(context)
+        response = self.render_to_response(context)
         response['ETag'] = self.etag(context)
         return response
 

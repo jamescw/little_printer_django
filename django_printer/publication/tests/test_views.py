@@ -68,7 +68,7 @@ class TestPublicationViews(TestCase):
         response = self.client.get('/edition/', data=self.data)
         self.assertContains(
             response,
-            'Bonjour {}'.format(self.data['name'])
+            'Bonsoir {}'.format(self.data['name'])
         )
 
     def test_validate_config_true(self):

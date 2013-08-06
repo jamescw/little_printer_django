@@ -33,9 +33,9 @@ class HelloWorldView(EditionView):
 
         # Pick a time of day appropriate greeting
         i = 0
-        if 17 < date.hour <= 12:
+        if 12 < date.hour <= 17:
             i = 1
-        if 24 < date.hour <= 17 or 0 < date.hour <= 3:
+        if 17 < date.hour <= 24 or 0 < date.hour <= 3:
             i = 2
 
         return {
