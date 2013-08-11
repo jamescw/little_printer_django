@@ -1,6 +1,8 @@
 Little Printer Django Project
 =============================
 
+[![Build Status](https://travis-ci.org/jamescw/little_printer_django.png)](https://travis-ci.org/jamescw/little_printer_django)
+
 An example django project and library for creating little printer publications.
 
 
@@ -13,6 +15,8 @@ missing a trick when it came to parameter validation from BERG Cloud.
 One thing Django is really good at is parameter validation using class based forms.
 Using forms also allows us to automatically generate meta descriptions for BERG Cloud
 making it a simple process to create publications.
+
+I also wanted to provide more of a complete example that could easily be deployed on a platform like Heroku.
 
 
 Quick Start
